@@ -1,0 +1,242 @@
+.container {
+    width: 100%;
+    padding-left: 7%;
+}
+
+/* =========================
+   TÍTULO DA SEÇÃO
+========================= */
+
+.label_txt p {
+    color: var(--blue_dar_text_color);
+    font-weight: 800;
+    font-size: 33px;
+    margin-bottom: 35px;
+    position: relative;
+    display: inline-block;
+}
+
+.label_txt p::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 40%;
+    height: 5px;
+    background: #FFD000;
+}
+
+/* =========================
+   TÍTULO + DESCRIÇÃO + BOTÃO
+========================= */
+
+.content_service {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 25px;
+    padding-right: 5%;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+
+.service_title {
+    display: flex;
+    flex-direction: column;
+}
+
+.service_title > p {
+    margin: 0;
+    color: black;
+    font-size: 52px;
+    font-weight: 800;
+}
+
+/* =========================
+   "AR CONDICIONADO / DO SEU CARRO"
+========================= */
+
+.content_service_txt {
+    display: flex;
+    gap: 15px;
+}
+
+.content_service_txt p {
+    margin: 0;
+    color: black;
+    font-size: 52px;
+    font-weight: 800;
+}
+
+.content_service_txt p:first-child {
+    color: var(--blue_dar_text_color);
+}
+
+/* =========================
+   DESCRIÇÃO
+========================= */
+
+.service_description {
+    max-width: 230px;
+}
+
+.service_description p {
+    margin: 0;
+    color: black;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* =========================
+   BOTÃO "VER TODOS"
+========================= */
+
+.service_button button {
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #0742B5;
+    color: white;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.service_button button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    background-color: #0a4dcc;
+}
+
+/* =========================
+   CONTAINER DOS CARDS
+========================= */
+
+.cards_container {
+    display: flex;
+    gap: 6px;
+    margin-top: 50px;
+    padding-right: 5%;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 12px;
+    box-sizing: border-box;
+
+    border: 1px solid #dce5f5;
+    border-radius: 9px;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+
+    /* Remove o comportamento visual padrão do <a> */
+    text-decoration: none;
+    color: inherit;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* =========================
+   HOVER DO CARD
+========================= */
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   CABEÇALHO DO CARD
+========================= */
+
+.card_header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+}
+
+/* =========================
+   ÍCONE
+========================= */
+
+.card_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_icon img {
+    height: 65px;
+    object-fit: contain;
+}
+
+/* =========================
+   TÍTULO DO CARD
+========================= */
+
+.card_header h3 {
+    margin: 0;
+    color: #071936;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* =========================
+   IMAGEM DO CARD
+========================= */
+
+.card > img {
+    height: 200px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+/* =========================
+   DESCRIÇÃO DO CARD
+========================= */
+
+.card_description {
+    margin: 12px 0 0;
+    color: #071936;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+/* =========================
+   "SAIBA MAIS"
+========================= */
+
+.card_link {
+    margin-top: auto;
+    padding-top: 10px;
+
+    color: #0742B5;
+    font-size: 13px;
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
