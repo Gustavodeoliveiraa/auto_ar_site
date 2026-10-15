@@ -240,3 +240,26 @@
     align-items: center;
     gap: 7px;
 }
+
+
+
+@media (max-width: 1536px) { 
+    .container {
+        padding-left: 2%;
+    }
+
+    .service_title p{
+        font-size: 45px;
+    }
+
+    .cards_container {
+        padding-right: 2%;
+    }
+
+    .card {
+        flex: 1;
+        min-width: 0;
+        padding: 15px 8px;
+    }
+
+}

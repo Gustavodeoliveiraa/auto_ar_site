@@ -46,3 +46,11 @@ p {
 
     transform: translateX(-38px);
 }
+
+
+@media (max-width: 1536px) { 
+    .container_section {
+        height: 640px ;
+    }
+
+}

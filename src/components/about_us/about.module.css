@@ -1,9 +1,15 @@
+
 .container {
     width: 100%;
     margin-top: 100px;
+
     background-image: url("../assets/abbout_us/blue_background.png");
     background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 100%;
+    padding-bottom: 18px;
 }
+
 
 .content {
     display: flex;
@@ -14,8 +20,8 @@
 
 .content_txt {
     width: 40%;
-    height: 100%;
     padding-top: 3%;
+    min-width: 0;
 }
 
 .yellow_about {
@@ -69,7 +75,7 @@
     justify-content: center;
     box-sizing: border-box;
 
-    width: 55%;
+    width: 390px;
     min-height: 50px;
     padding: 10px;
 
@@ -103,14 +109,40 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 60%;
+    min-width: 0;
 }
 
 .about_us_img img {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+@media (max-width: 1536px) {
+    .content {
+        padding-left: 5%;
+    }
+    .yellow_about {
+        font-size: 25px;
+    }
+
+    .about_us_txt h2 {
+        margin: 0;
+        color: white;
+        font-size: 45px;
+        line-height: 1.1;
+    }
+
+    .autoar_biography p {
+        margin-right: 10px;
+        font-size: 25px;
+        font-weight: 200;
+    }
+
+   .about_us_img {
+        width: 56%;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
