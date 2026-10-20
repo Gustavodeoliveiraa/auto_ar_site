@@ -245,7 +245,7 @@
 
 @media (max-width: 1536px) { 
     .container {
-        padding-left: 2%;
+        padding-left: 1%;
     }
 
     .service_title p{
@@ -253,7 +253,7 @@
     }
 
     .cards_container {
-        padding-right: 2%;
+        padding-right: 1%;
     }
 
     .card {
@@ -261,5 +261,10 @@
         min-width: 0;
         padding: 15px 8px;
     }
+
+    .card_description {
+        font-size: 15px;
+    }
+
 
 }
