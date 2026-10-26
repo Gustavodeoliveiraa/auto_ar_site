@@ -1,72 +1,10 @@
 
 import { useEffect, useRef, useState } from "react";
+
 import styles from "./videos.module.css";
-
-import painel from "../assets/cards/img_remoçao_painel.png";
-import compressor from "../assets/cards/img_defeito_compressor.png"
-import higienizacao from "../assets/cards/img_higienização.png"
-import gas from "../assets/cards/img_carga_de_gas.png"
-
-import byd from "../assets/cards/u9extreme.png"
-
-
-const category = [
-    { id: "all", label: "Todos" },
-    { id: "remocao-de-painel", label: "Remoção de Painel" },
-    { id: "defeito-de-compressor", label: "Defeito de Compressor" },
-    { id: "higienizacao", label: "Higienização" },
-    { id: "carga-de-gas", label: "Carga de Gás" },
-    { id: "outros", label: "Outros" },
-];
-
-const mockVideos = [
-    {
-        id: 1,
-        title: "Remoção de painel",
-        category: "remocao-de-painel",
-        thumbnail: painel,
-        description: "Remoção completado painel evoque 2020",
-        duration: "03:45",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-        id: 2,
-        title: "Defeito no compressor",
-        category: "defeito-de-compressor",
-        thumbnail: compressor,
-        description: "Defeito no compressor Peugeot 208",
-        duration: "02:34",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-        id: 3,
-        title: "Higienização",
-        category: "higienizacao",
-        thumbnail: higienizacao,
-        description: "Higienização WURTH por ozônio",
-        duration: "01:37",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-        id: 4,
-        title: "Carga de gás",
-        category: "carga-de-gas",
-        thumbnail: gas,
-        description: "Carga de gás Ar condicionado",
-        duration: "05:00",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-
-    {
-        id: 5,
-        title: "Remoção de painel",
-        category: "remocao-de-painel",
-        thumbnail: byd,
-        description: "Remoção painel do Byd Yangwang u9",
-        duration: "23:30",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-];
+import { mockVideos } from "../../data/videos";
+import { category } from "../../data/categories";
+import instagramIcon from "../assets/footer/instagram_icon.png";
 
 export function Videos() {
     const [categorySelected, setCategorySelected] = useState("all");
@@ -89,7 +27,7 @@ export function Videos() {
                   (video) => video.category === categorySelected
               );
 
-    // Volta o carrossel ao início quando a categoria muda
+    // Reinicia o carrossel quando a categoria muda.
     useEffect(() => {
         if (sliderRef.current) {
             sliderRef.current.scrollLeft = 0;
@@ -98,28 +36,38 @@ export function Videos() {
         dragData.current.moved = false;
     }, [categorySelected]);
 
-    // Mede a altura real do primeiro card
+    // Mantém a altura do estado vazio compatível com a dos cards.
     useEffect(() => {
         const card = cardRef.current;
 
         if (!card) return;
 
         const updateHeight = () => {
-            setCardHeight(card.getBoundingClientRect().height);
+            const height = card.getBoundingClientRect().height;
+
+            setCardHeight((previousHeight) =>
+                previousHeight === height ? previousHeight : height
+            );
         };
 
         updateHeight();
 
-        const observer = new ResizeObserver(() => {
-            updateHeight();
-        });
+        if (typeof ResizeObserver === "undefined") {
+            window.addEventListener("resize", updateHeight);
 
+            return () => {
+                window.removeEventListener("resize", updateHeight);
+            };
+        }
+
+        const observer = new ResizeObserver(updateHeight);
         observer.observe(card);
 
         return () => observer.disconnect();
     }, [categorySelected, filteredVideos.length]);
 
     function handlePointerDown(event) {
+        // Ignora botões secundários do mouse.
         if (event.pointerType === "mouse" && event.button !== 0) {
             return;
         }
@@ -143,15 +91,13 @@ export function Videos() {
 
         if (!slider || !isDragging) return;
 
-        const distance =
-            event.clientX - dragData.current.startX;
+        const distance = event.clientX - dragData.current.startX;
 
         if (Math.abs(distance) > 5) {
             dragData.current.moved = true;
         }
 
-        slider.scrollLeft =
-            dragData.current.scrollLeft - distance;
+        slider.scrollLeft = dragData.current.scrollLeft - distance;
     }
 
     function handlePointerUp() {
@@ -176,12 +122,12 @@ export function Videos() {
                 <p className={styles.label}>Vídeos</p>
 
                 <div className={styles.service}>
-                    <h1
+                    <h2
                         id="videos-title"
                         className={styles.title}
                     >
                         Serviços realizados
-                    </h1>
+                    </h2>
 
                     <p className={styles.description}>
                         Escolha uma categoria e conheça mais sobre cada
@@ -189,26 +135,31 @@ export function Videos() {
                     </p>
                 </div>
 
-                <div className={styles.categories}>
-                    {category.map((categoria) => (
-                        <button
-                            key={categoria.id}
-                            type="button"
-                            className={`${styles.categoryButton} ${
-                                categorySelected === categoria.id
-                                    ? styles.active
-                                    : ""
-                            }`}
-                            aria-pressed={
-                                categorySelected === categoria.id
-                            }
-                            onClick={() =>
-                                setCategorySelected(categoria.id)
-                            }
-                        >
-                            {categoria.label}
-                        </button>
-                    ))}
+                <div
+                    className={styles.categories}
+                    role="group"
+                    aria-label="Filtrar vídeos por categoria"
+                >
+                    {category.map((categoria) => {
+                        const isActive =
+                            categorySelected === categoria.id;
+
+                        return (
+                            <button
+                                key={categoria.id}
+                                type="button"
+                                className={`${styles.categoryButton} ${
+                                    isActive ? styles.active : ""
+                                }`}
+                                aria-pressed={isActive}
+                                onClick={() =>
+                                    setCategorySelected(categoria.id)
+                                }
+                            >
+                                {categoria.label}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -219,6 +170,10 @@ export function Videos() {
                         className={`${styles.videoGrid} ${
                             isDragging ? styles.dragging : ""
                         }`}
+                        role="region"
+                        aria-label="Vídeos dos serviços realizados"
+                        aria-roledescription="carrossel"
+                        tabIndex={0}
                         onPointerDown={handlePointerDown}
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
@@ -237,7 +192,7 @@ export function Videos() {
                                 >
                                     <img
                                         src={video.thumbnail}
-                                        alt={video.title}
+                                        alt=""
                                         className={styles.thumbnail}
                                         draggable={false}
                                     />
@@ -255,17 +210,13 @@ export function Videos() {
                                         </svg>
                                     </div>
 
-                                    <h2 className={styles.videoTitle}>
+                                    <h3 className={styles.videoTitle}>
                                         {video.title}
-                                    </h2>
+                                    </h3>
                                 </div>
 
                                 <div className={styles.videoInfo}>
-                                    <p
-                                        className={
-                                            styles.videoDescription
-                                        }
-                                    >
+                                    <p className={styles.videoDescription}>
                                         {video.description}
                                     </p>
 
@@ -280,11 +231,10 @@ export function Videos() {
                     <div
                         className={styles.emptyState}
                         style={{
-                            minHeight:
-                                cardHeight > 0
-                                    ? `${cardHeight}px`
-                                    : "350px",
+                            minHeight: `${Math.max(cardHeight, 350)}px`,
                         }}
+                        role="status"
+                        aria-live="polite"
                     >
                         <p className={styles.emptyTitle}>
                             Ainda não temos vídeos por aqui.
@@ -295,6 +245,26 @@ export function Videos() {
                         </p>
                     </div>
                 )}
+            </div>
+
+            <div className={styles.instagramButton}>
+                <a
+                    className={styles.instagramLink}
+                    href="https://www.instagram.com/autoarjrarcondicionado/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Ver mais vídeos no Instagram da Auto Ar JR (abre em nova aba)"
+                >
+                    <span>Ver mais vídeos</span>
+
+                    <img
+                        src={instagramIcon}
+                        alt=""
+                        className={styles.instagramIcon}
+                        width="32"
+                        height="32"
+                    />
+                </a>
             </div>
         </section>
     );
