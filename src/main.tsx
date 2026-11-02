@@ -7,6 +7,7 @@ import { Hero } from "./components/hero/hero"
 import { Services } from "./components/services/services"
 import {About} from "./components/about_us/about"
 import {Videos} from "./components/videos/videos"
+import { Footer } from "./components/footer/footer";
 
 
 import './index.css'
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
       <Services/>
       <About/>
       <Videos/>
+      <Footer/>
     </BrowserRouter>
   </StrictMode>
 );
